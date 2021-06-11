@@ -3,3 +3,5 @@ export const AddItem = 'AddItem';
 export const onClickItem = "onClickItem";
 export const onDeleteTask = "onDeleteTask";
 export const SetTasks = "SetTasks";
+export const GETALLTASK = "GETALLTASK"
+export const DeleteTaskAPI = "DeleteTaskAPI"

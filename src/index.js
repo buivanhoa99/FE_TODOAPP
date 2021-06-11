@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createStore } from 'redux';
+import { createStore ,applyMiddleware} from 'redux';
 import myReducer from './reducers/index'
 import {Provider} from 'react-redux'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import thunk from 'redux-thunk';
 
-const store = createStore(myReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+const store = createStore(myReducer,applyMiddleware(thunk)
+  // ,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   );
 
 ReactDOM.render(
