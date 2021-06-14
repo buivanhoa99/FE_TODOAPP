@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import {Form,Button} from 'react-bootstrap'
@@ -7,22 +7,26 @@ import {connect} from 'react-redux'
 import * as actions from '../../actions'
 
 function MyModal (props) {
-    const {isShow,setIsShow,OnAddTask} = props;
+    const {isShow,setIsShow,OnAddTask,AddTaskBySaga} = props;
     const [input,setInput] = useState("");
     const [status,setStatus] = useState(false);
+
+    useEffect(()=>{
+        setInput("");
+        setStatus(false);
+    },[isShow])
+
     function closeModal(){
         setIsShow(false);
     }
 
     function handleClick(e){
         e.preventDefault();
-        console.log(input);
-        console.log(status);
         const task = {
             title : input,
-            status : status,
+            status : status==='true',
         }
-        OnAddTask(task);
+        AddTaskBySaga(task);
         closeModal();
     }
     function handleChange(e){
@@ -34,6 +38,7 @@ function MyModal (props) {
 
     return (
         <Modal
+            ariaHideApp = {false}
             isOpen={isShow}
             onRequestClose={closeModal}
             contentLabel="Example Modal"
@@ -56,7 +61,7 @@ function MyModal (props) {
         </div>
         </Form.Group>
         <br></br>
-        <Button onClick= {handleClick} variant="primary"  type="submit">
+        <Button onClick= {handleClick} variant="primary" >
             Add
         </Button>
         </Form>
@@ -72,9 +77,10 @@ const mapStateToProps = state =>{
   }
   const mapDispatchToProps = (dispatch,props) =>{
     return {
-        OnAddTask : (task) =>{
-          dispatch(actions.AddTask(task))
-        },
+
+        OnAddTaskSaga : task =>{
+            dispatch(actions.AddTaskBySaga(task));
+        }
 
     }
   }

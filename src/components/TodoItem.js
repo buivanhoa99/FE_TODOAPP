@@ -7,6 +7,7 @@ import "./TodoItem.css"
 export default (props) => {
 
     const {item,onClick,onItemDelete} = props;
+    // console.log("ITEM",item);
     return(
         <div className="TodoContainer">
         

@@ -6,12 +6,19 @@ import reportWebVitals from './reportWebVitals';
 import { createStore ,applyMiddleware} from 'redux';
 import myReducer from './reducers/index'
 import {Provider} from 'react-redux'
+import createSagaMiddleware from 'redux-saga'
+import  mySaga from './sagas'
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import thunk from 'redux-thunk';
 
-const store = createStore(myReducer,applyMiddleware(thunk)
+const sagaMiddleware = createSagaMiddleware()
+
+const store = createStore(myReducer,applyMiddleware(thunk,sagaMiddleware)
   // ,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   );
+sagaMiddleware.run(mySaga)
+
 
 ReactDOM.render(
   <React.StrictMode>

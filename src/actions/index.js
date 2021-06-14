@@ -1,3 +1,5 @@
+import {call,put} from 'redux-saga/effects'
+
 import TodoItemAPI from '../api/TodoItemAPI'
 import * as types from '../constants'
 export const listAll = () =>(
@@ -70,17 +72,10 @@ export const DeleteTaskAPI =  id=>{
     }
 }
 
-export const ChangeStatusAPI =  id=>{
-    return async dispatch =>{
-        TodoItemAPI.DeleteItem(id)
-            .then(res=>{
-                dispatch(onDeleteTask(id));
-                dispatch(GETALLTASKAPI());
-            })
-            .catch(err=>console.log(err));
-
-    }
-}
+export const ChangeStatusAPI =  task=>({
+    type : types.ChangeStatusAPI,
+    task,
+})
 
 export const GETALLTASKAPI = () =>{
         return dispatch =>{
@@ -99,3 +94,18 @@ export const GETALLTASKAPI = () =>{
                 .catch(err=>console.log(err));
         }
 }
+
+// export function ListAllBySaga(){
+    
+// }
+export const ListAllBySaga = () => (
+    {
+        type : types.ListAllBySaga,
+    }
+)
+export const AddTaskBySaga = (task) => (
+    {
+        type : types.AddTaskBySaga,
+        task,
+    }
+)

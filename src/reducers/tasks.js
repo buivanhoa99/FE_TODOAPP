@@ -6,10 +6,12 @@ const myReducer = (state=initialState,action) =>{
     let newState = [...state];
     switch (action.type) {
         case types.LIST_ALL:
-            return state;            
+            return state;      
+        case types.ListAllBySaga:
+            return state;      
         case types.AddItem:
-            // newState = [...state,action.task];
-            // console.log("ADD ITEM",action.task);
+            newState = [...state,action.task];
+            console.log("ADD ITEM",action.task);
             return newState;
         case types.onClickItem:
             newState[action.index].status = !newState[action.index].status;

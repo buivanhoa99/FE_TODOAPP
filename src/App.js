@@ -14,7 +14,7 @@ import TodoItem from './components/TodoItem';
 const Index1 = ()=>(<h1>Index</h1>)
 const About = ()=>(<h1>About</h1>)
 function App(props) {
-  const {todos,OnAddTask,onClickTask,onDeleteTask,AddTasks,GETALLTASKAPI,ADDTASKAPI,DeleteTaskAPI} = props;
+  const {todos,OnAddTask,onClickTask,onDeleteTask,AddTasks,GETALLTASKAPI,ADDTASKAPI,DeleteTaskAPI,ListAllBySaga,AddTaskBySaga,ChangeStatusAPI} = props;
   console.log("ABC",todos);
   const [listItem,setListItem] = useState(todos);
   const [inputValue,setInputValue] = useState("");
@@ -22,8 +22,10 @@ function App(props) {
   const [filteredData,setFilteredData] = useState(todos)
   const [isShow,setIsShow] = useState(false);
   console.log(inputValue);
+  console.log("TODOSSSSSSS",todos);
   useEffect(()=>{
-    GETALLTASKAPI();
+    // GETALLTASKAPI();
+    ListAllBySaga();
   },[]);
 
 
@@ -53,7 +55,7 @@ function App(props) {
     if (value.charCode==13){
       const newItem = {title: a,status:false}
       console.log(newItem);
-      ADDTASKAPI(newItem)
+      AddTaskBySaga(newItem);
       setInputValue("");
     }
   }
@@ -85,7 +87,7 @@ function App(props) {
     <Modal
       isShow = {isShow}
       setIsShow = {setIsShow}
-      
+      AddTaskBySaga = {AddTaskBySaga}
     />
 
     <div className="App">
@@ -97,7 +99,7 @@ function App(props) {
             <TodoItem 
               item = {value}
               key = {index}
-              onClick = {()=>{onClickTask(index)}}
+              onClick = {()=>{ChangeStatusAPI(value)}}
               onItemDelete = {()=>{
                 DeleteTaskAPI(value.id);
               }}
@@ -123,6 +125,12 @@ const mapDispatchToProps = (dispatch,props) =>{
       OnAddTask : (task) =>{
         dispatch(actions.AddTask(task))
       },
+      ListAllBySaga : ()=>{
+        dispatch(actions.ListAllBySaga());
+      },
+      AddTaskBySaga : (task)=>{
+        dispatch(actions.AddTaskBySaga(task));
+      },
       onClickTask : (index) =>{
         dispatch(actions.onItemClick(index));
       },
@@ -140,6 +148,9 @@ const mapDispatchToProps = (dispatch,props) =>{
       },
       DeleteTaskAPI : id =>{
         dispatch(actions.DeleteTaskAPI(id));
+      },
+      ChangeStatusAPI : task =>{
+        dispatch(actions.ChangeStatusAPI(task));
       }
   }
 }

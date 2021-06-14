@@ -12,6 +12,10 @@ const baseURL = "/TodoItems";
     DeleteItem : id =>{
         const url = baseURL+"/"+id;
         return axiosClient.delete(url);
+    },
+    ChangeStatusItem : (data)=>{
+        const url = baseURL+ "/status";
+        return axiosClient.patch(url,data);
     }
 
 
